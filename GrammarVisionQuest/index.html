@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>vibun</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="形容詞・副詞、比較、同格・無生物主語、前置詞、群動詞、名詞・冠詞の穴埋め練習">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+    <div id="login">
+      <h2>LOGIN</h2>
+      <input type="password" id="pw" placeholder="パスワード">
+      <button onclick="login()">入室</button>
+    </div>
+
+    <div id="app" style="display:none;">
+      <div id="home" class="screen">
+        <div class="home-top">
+          <button id="themeToggle" class="icon-toggle" aria-label="テーマ切り替え"></button>
+        </div>
+
+        <img id="logoImg" src="images/title.png" alt="vibun">
+
+        <div class="vq-brand">
+          <p class="vq-sub">文法オプション集中（LEAP形式）</p>
+        </div>
+
+        <label class="toggle">
+          <span>ランダム出題</span>
+          <input type="checkbox" id="randomToggle">
+        </label>
+
+        <label class="input-mode-label" for="inputModeSelect">入力形式</label>
+        <select id="inputModeSelect" class="input-mode-select" aria-label="入力形式">
+          <option value="word">英文の穴（語句）</option>
+          <option value="full">全文（和訳→英文）</option>
+          <option value="partialJp">部分和訳（穴→日本語）</option>
+        </select>
+
+        <select id="animMode" class="anim-mode" aria-label="アニメ演出モード">
+          <option value="simple">シンプル</option>
+          <option value="neon">ネオン</option>
+          <option value="pop">ポップ</option>
+        </select>
+
+        <div id="unitList" class="unit-list">
+          <button id="random10Btn" class="unit-btn special">
+            ランダム10問
+          </button>
+
+          <div class="range-test">
+            <p class="range-test-title">番号範囲でテスト（1〜108）</p>
+            <div class="range-inputs">
+              <input type="number" id="rangeStart" min="1" max="108" placeholder="開始">
+              <span>〜</span>
+              <input type="number" id="rangeEnd" min="1" max="108" placeholder="終了">
+            </div>
+            <button id="rangeTestBtn" class="unit-btn special">範囲テスト開始</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="quiz" class="screen hidden">
+        <p id="progress"></p>
+
+        <div class="card">
+          <p id="sentence"></p>
+          <p id="jp"></p>
+
+          <div class="answer-area">
+            <textarea id="answerInput" rows="2" autocomplete="off" spellcheck="false"></textarea>
+            <button id="judgeBtn">判定</button>
+            <div id="result"></div>
+            <div id="matchRate" class="hidden match-rate"></div>
+            <div id="meaning" class="hidden"></div>
+          </div>
+
+          <div id="wordStage" class="word-stage hidden" aria-hidden="true">
+            <div id="wordSilhouette" class="word-silhouette"></div>
+            <div id="wordRipple" class="word-ripple"></div>
+            <span id="wordFalling" class="word-falling"></span>
+            <div id="wordBreakLayer" class="word-break-layer"></div>
+          </div>
+
+          <div id="comboDisplay" class="combo-display hidden" aria-hidden="true"></div>
+
+          <div class="controls">
+            <button id="homeBtn" class="home-btn" aria-label="ホームへ戻る">🏠</button>
+            <button id="speakBtn" class="btn-speak hidden">🔊</button>
+            <button id="nextBtn" class="btn-next hidden">▶</button>
+          </div>
+        </div>
+
+        <div id="globalFx" class="global-fx hidden" aria-hidden="true">
+          <div class="fx-noise"></div>
+          <div class="fx-particles"></div>
+          <div class="fx-ring"></div>
+        </div>
+      </div>
+
+      <div id="resultScreen" class="screen hidden">
+        <h2>セッション終了</h2>
+
+        <div class="result-actions">
+          <button id="backHome" class="secondary">ホームへ戻る</button>
+          <button id="reviewBtn" class="primary hidden">間違えた問題を復習</button>
+        </div>
+      </div>
+
+      <div id="appModal" class="app-modal hidden" role="dialog" aria-modal="true" aria-labelledby="appModalTitle">
+        <div id="appModalBackdrop" class="app-modal-backdrop"></div>
+        <div class="app-modal-panel">
+          <h3 id="appModalTitle">確認</h3>
+          <p id="appModalMessage"></p>
+          <div class="app-modal-actions">
+            <button id="appModalCancel" type="button" class="secondary hidden">キャンセル</button>
+            <button id="appModalOk" type="button" class="primary">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <script src="script.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("serviceworker.js", { scope: "./" })
+        .then(reg => console.log("Service Worker registered.", reg))
+        .catch(err => console.log("Service Worker registration failed:", err));
+    }
+  </script>
+</body>
+</html>
